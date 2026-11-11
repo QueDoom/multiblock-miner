@@ -3,15 +3,15 @@
 	"id": "qsmultiblockminer",
 	"version": "${version}",
 	"name": "Q's Multiblock Miner",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "It's like FTB Ultimine but a little simpler, and for fabric!",
 	"authors": [
-		"Me!"
+		"QueDoom"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://quedoom.com/",
+		"sources": "https://github.com/QueDoom/multiblock-miner"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/qsmultiblockminer/icon.png",
 	"environment": "*",
 	"entrypoints": {
