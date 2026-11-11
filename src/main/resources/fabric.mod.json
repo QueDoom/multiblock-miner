@@ -18,9 +18,6 @@
 		"main": [
 			"net.quedoom.multiblock_miner.QSMultiblockMiner"
 		],
-		"fabric-datagen": [
-			"net.quedoom.multiblock_miner.QSMultiblockMinerDataGenerator"
-		],
 		"client": [
 			"net.quedoom.multiblock_miner.QSMultiblockMinerClient"
 		],
