@@ -6,6 +6,7 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.quedoom.multiblock_miner.ModLoaded;
 import net.quedoom.multiblock_miner.config.QMMConfigManager;
 import net.quedoom.multiblock_miner.config.QMMConfigs;
 
@@ -20,10 +21,16 @@ public class DestroyageMgr {
     private static final Map<GlobalPos, Integer> DEPTHS = new HashMap<>();
 
     public static void start(ServerPlayer player, BlockPos pos, int depth) {
-        if (depth > QMMConfigManager.CONFIG.maxDepth) return;
+        if (depth > getMaxDepth()) return;
         GlobalPos key = GlobalPos.of(player.level().dimension(), pos.immutable());
         if (DEPTHS.putIfAbsent(key, depth) != null) return;
         PENDING.add(new SimulatedDestroyage(player, pos, depth));
+    }
+
+    public static int getMaxDepth() {
+        if (ModLoaded.FRANCIUM2 && QMMConfigManager.CONFIG.maxDepth == 4) {
+            return 2;
+        } else return QMMConfigManager.CONFIG.maxDepth;
     }
 
     public static int depthAt(Level level, BlockPos pos) {

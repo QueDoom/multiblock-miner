@@ -20,6 +20,7 @@ public class QSMultiblockMiner implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModLoaded.load();
 		QMMConfigManager.init();
 
 		DestroyageMgr.init();
