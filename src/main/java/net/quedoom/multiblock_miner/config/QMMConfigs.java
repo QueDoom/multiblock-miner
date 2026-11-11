@@ -22,6 +22,7 @@ import java.util.function.Function;
 import java.util.function.ToDoubleFunction;
 
 public class QMMConfigs {
+    @RangedInt(min = 1, max = 10)
     @Value(comment = "How far you can multimine.")
     public int maxDepth = 8;
 
