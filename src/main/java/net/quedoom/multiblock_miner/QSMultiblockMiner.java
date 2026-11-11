@@ -8,6 +8,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 
+import net.quedoom.multiblock_miner.config.QMMConfigManager;
 import net.quedoom.multiblock_miner.networking.MultimineState;
 import net.quedoom.multiblock_miner.things.DestroyageMgr;
 import org.slf4j.Logger;
@@ -19,6 +20,8 @@ public class QSMultiblockMiner implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		QMMConfigManager.init();
+
 		DestroyageMgr.init();
 		MultimineState.init();
 	}
