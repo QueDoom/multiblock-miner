@@ -5,10 +5,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.quedoom.multiblock_miner.ModLoaded;
 import net.quedoom.multiblock_miner.config.QMMConfigManager;
-import net.quedoom.multiblock_miner.config.QMMConfigs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +36,7 @@ public class DestroyageMgr {
     }
 
     static void finished(SimulatedDestroyage destroyage) {
-        DEPTHS.remove(GlobalPos.of(destroyage.level.dimension(), destroyage.pos));
+        DEPTHS.remove(GlobalPos.of(destroyage.level.dimension(), destroyage.worldPosition));
     }
 
     public static void init() {
