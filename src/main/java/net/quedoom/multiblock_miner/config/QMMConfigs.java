@@ -23,7 +23,6 @@ import java.util.function.ToDoubleFunction;
 
 public class QMMConfigs {
     @RangedInt(min = 1, max = 10)
-    @Value(comment = "How far you can multimine.")
     public int maxDepth = 8;
 
     @Retention(RetentionPolicy.RUNTIME)
@@ -37,9 +36,14 @@ public class QMMConfigs {
             if (meta == null || field.isAnnotationPresent(FileOnlyConfig.class)) continue;
             field.setAccessible(true);
 
-            String key = "francium.options." + field.getName();
+            String key = "options.qsmultiblockminer." + field.getName();
             Component name = Component.translatable(key);
-            Component comment = Component.literal(meta.comment());
+            Component comment;
+            if (meta.comment().isBlank()) {
+                comment = Component.literal("");
+            } else {
+                comment = Component.translatable(key + ".description");
+            }
             Class<?> type = field.getType();
 
             try {
