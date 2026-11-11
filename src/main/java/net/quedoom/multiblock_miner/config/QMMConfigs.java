@@ -23,7 +23,8 @@ import java.util.function.ToDoubleFunction;
 
 public class QMMConfigs {
     @RangedInt(min = 1, max = 10)
-    public int maxDepth = 8;
+    @Value
+    public int maxDepth = 4;
 
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.FIELD)
