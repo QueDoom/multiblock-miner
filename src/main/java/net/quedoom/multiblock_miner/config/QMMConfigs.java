@@ -8,6 +8,9 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.StringRepresentable;
+import net.quedoom.multiblock_miner.QSMultiblockMiner;
+import org.jspecify.annotations.NonNull;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -23,8 +26,21 @@ import java.util.function.ToDoubleFunction;
 
 public class QMMConfigs {
     @RangedInt(min = 1, max = 10)
-    @Value
+    @Value(comment = "How far you can multimine.")
     public int maxDepth = 4;
+
+    @Value(comment = "For example it will stop if you switch to an empty hand when Multiblock Mining stone.")
+    public boolean requireCorrectTool = true;
+
+    @Value(comment = "Will do a Multiblock Mine if the block broken is an ore. Even if the keybind is unpressed.")
+    public OreBreakPosition ignoreKeybindIfOre = OreBreakPosition.NEVER_MULTI;
+
+    @Value(comment = "If the enchantment addon is present; does the enchantment actually need to be on the tool?")
+    public boolean requireEnchantment = true;
+
+    @FileOnlyConfig
+    @Value(comment = "Logs most things. Only turn on if debugging. Is not available in modmenu options screen.")
+    public boolean crazyLogging = true;
 
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.FIELD)
@@ -98,6 +114,9 @@ public class QMMConfigs {
                             v -> String.format("%.2f", v),
                             field.getFloat(QMMConfigManager.CONFIG), v -> set(field, v));
 
+                } else if (type.isEnum() && StringRepresentable.class.isAssignableFrom(type)) {
+                    widget = enumButton(options, key, comment, field);
+
                 } else if (type == int.class || type == long.class || type == float.class
                         || type == double.class || type == String.class) {
                     widget = textBox(field, name, comment);
@@ -109,6 +128,29 @@ public class QMMConfigs {
             }
         }
         return widgets;
+    }
+
+    private static Component translatableFromEnum(StringRepresentable enumm) {
+        return QSMultiblockMiner.translatable("options.enum", enumm.getClass().getSimpleName() + '.' + enumm.getSerializedName());
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private static AbstractWidget enumButton(Options options, String key, Component comment, Field field) throws IllegalAccessException {
+        return enumButtonTyped(options, key, comment, field, (Class) field.getType());
+    }
+
+    private static <E extends Enum<E> & StringRepresentable> AbstractWidget enumButtonTyped(
+            Options options, String key, Component comment, Field field, Class<E> type) throws IllegalAccessException {
+        E[] constants = type.getEnumConstants();
+        @SuppressWarnings("unchecked")
+        E initial = (E) field.get(QMMConfigManager.CONFIG);
+        OptionInstance.TooltipSupplier<@NonNull E> tip = OptionInstance.cachedConstantTooltip(comment);
+
+        return new OptionInstance<>(key, tip,
+                (caption, v) -> translatableFromEnum(v),
+                new OptionInstance.Enum<>(List.of(constants), StringRepresentable.fromEnum(() -> constants)),
+                initial,
+                v -> set(field, v)).createButton(options);
     }
 
     private static boolean isFinite(double min, double max) {
@@ -139,6 +181,7 @@ public class QMMConfigs {
                 box.setTextColor(0xFFFF5555);
             }
         });
+        box.setTooltip(Tooltip.create(comment == null ? name : name.copy().append("\n").append(comment)));
         return box;
     }
 

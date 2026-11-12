@@ -1,5 +1,17 @@
 {
+  "options.qsmultiblockminer": "Q's Multiblock Miner Options",
   "options.qsmultiblockminer.maxDepth": "Max Depth",
   "options.qsmultiblockminer.maxDepth.description": "How far you can multimine.",
-  "options.qsmultiblockminer": "Q's Multiblock Miner Options"
+  "options.qsmultiblockminer.ignoreKeybindIfOre": "Ignore Keybind if Ore",
+  "options.qsmultiblockminer.ignoreKeybindIfOre.description": "Will do a Multiblock Mine if the block broken is an ore. Even if the keybind is unpressed.",
+  "options.qsmultiblockminer.requireEnchantment": "Require Enchantment",
+  "options.qsmultiblockminer.requireEnchantment.description": "If the enchantment addon is present; does the enchantment actually need to be on the tool?",
+  "options.qsmultiblockminer.requireCorrectTool": "Require Correct Tool",
+  "options.qsmultiblockminer.requireCorrectTool.description": "For example it will stop if you switch to an empty hand when Multiblock Mining stone.",
+  "options.enum.qsmultiblockminer.OreBreakPosition.always": "Always",
+  "options.enum.qsmultiblockminer.OreBreakPosition.never": "Never",
+  "options.enum.qsmultiblockminer.OreBreakPosition.if_shift": "Only if Crouching",
+  "options.enum.qsmultiblockminer.OreBreakPosition.unless_shift": "Only unless Standing",
+  "key.category.qsmultiblockminer.qs_multiblock_miner": "Q's Multiblock Miner",
+  "key.qsmultiblockminer.multiblock_mine": "Multiblock Mine"
 }

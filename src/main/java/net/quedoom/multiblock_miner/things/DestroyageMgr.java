@@ -5,30 +5,25 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
-import net.quedoom.multiblock_miner.ModLoaded;
-import net.quedoom.multiblock_miner.config.QMMConfigManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DestroyageMgr {
+public class DestroyageMgr extends CrazyLogger {
     private static final List<SimulatedDestroyage> ACTIVE = new ArrayList<>();
     private static final List<SimulatedDestroyage> PENDING = new ArrayList<>();
     private static final Map<GlobalPos, Integer> DEPTHS = new HashMap<>();
 
     public static void start(ServerPlayer player, BlockPos pos, int depth) {
-        if (depth > getMaxDepth()) return;
+        if (depth > MultiblockMineChecks.getMaxDepth()) return;
+        if (!MultiblockMineChecks.canBreak(player, player.level(), pos)) return;
+
         GlobalPos key = GlobalPos.of(player.level().dimension(), pos.immutable());
         if (DEPTHS.putIfAbsent(key, depth) != null) return;
         PENDING.add(new SimulatedDestroyage(player, pos, depth));
-    }
-
-    public static int getMaxDepth() {
-        if (ModLoaded.FRANCIUM2 && QMMConfigManager.CONFIG.maxDepth == 4) {
-            return 2;
-        } else return QMMConfigManager.CONFIG.maxDepth;
+        info("Added to pending.");
     }
 
     public static int depthAt(Level level, BlockPos pos) {

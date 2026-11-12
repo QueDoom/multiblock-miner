@@ -24,14 +24,22 @@
 		"modmenu": [
 			"net.quedoom.multiblock_miner.modmenu.QMMModMenuApi"
 		]
-	},"custom": {
+	},
+	"custom": {
 		"modmenu": {
 			"links": {
 				"modmenu.discord": "https://discord.gg/xkdXpApT5r",
 				"modmenu.issues": "https://github.com/QueDoom/multiblock-miner/issues"
-			},
-			"badges": []
-		}
+			}
+		},
+		"mcb": [
+			{
+				"name": "QueT",
+				"labelColor": -1842205,
+				"fillColor": -15576197,
+				"outlineColor": -7419425
+			}
+		]
 	},
 	"mixins": [
 		"qsmultiblockminer.mixins.json"

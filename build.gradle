@@ -31,9 +31,12 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
+	implementation("maven.modrinth:quet:${quet_version}")
+
 	implementation("net.darkhax.pricklemc:prickle-fabric-${minecraft_version}:${minecraft_version}.${prickle_version}")
 
 	implementation("com.terraformersmc:modmenu:${project.modmenu_version}")
+	include(implementation("maven.modrinth:modmenu-badges-lib:${project.modmenu_badges_version}"))
 }
 
 processResources {
@@ -72,15 +75,17 @@ jar {
 publishing {
 	publications {
 		create("mavenJava", MavenPublication) {
+			groupId = project.maven_group
+			artifactId = project.archives_base_name
+			version = project.version
 			from components.java
 		}
 	}
 
 	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
 	repositories {
-		// Add repositories to publish to here.
-		// Notice: This block does NOT have the same function as the block in the top level.
-		// The repositories here will be used for publishing your artifact, not for
-		// retrieving dependencies.
+		maven {
+			url = uri("maven")
+		}
 	}
 }
